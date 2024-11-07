@@ -37,16 +37,15 @@ const Intern = () => {
     const indexOfFirstIntern = indexOfLastIntern - internsPerPage;
     const currentInterns = filteredInterns.slice(indexOfFirstIntern, indexOfLastIntern);
 
-    const nextPage = () => {
-        if (currentPage < Math.ceil(filteredInterns.length / internsPerPage)) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
+    const handlePagination = (direction) => {
+        setCurrentPage(prevPage => {
+            if (direction === 'next' && currentPage < Math.ceil(filteredInterns.length / internsPerPage)) {
+                return prevPage + 1;
+            } else if (direction === 'prev' && currentPage > 1) {
+                return prevPage - 1;
+            }
+            return prevPage;
+        });
     };
 
     return (
@@ -87,14 +86,14 @@ const Intern = () => {
                 <div className="flex justify-between mt-4">
                     <button 
                         className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-600"
-                        onClick={prevPage}
+                        onClick={() => handlePagination('prev')}
                         disabled={currentPage === 1}
                     >
                         Previous
                     </button>
                     <button 
                         className="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-600"
-                        onClick={nextPage}
+                        onClick={() => handlePagination('next')}
                         disabled={currentPage === Math.ceil(filteredInterns.length / internsPerPage)}
                     >
                         Next
