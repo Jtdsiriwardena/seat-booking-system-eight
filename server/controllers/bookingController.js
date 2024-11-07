@@ -66,6 +66,9 @@ const sendConfirmationEmail = async (intern, booking) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com', // This ensures the use of Gmail's SMTP server
+            port: 465, // Port 465 is commonly used for SSL/TLS
+            secure: true, // This ensures that the connection uses SSL/TLS encryption
             auth: {
                 user: process.env.EMAIL_USER, 
                 pass: process.env.EMAIL_APP_PASSWORD 
